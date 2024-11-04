@@ -85,48 +85,6 @@ class Page1 extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  width: 137,
-                  height: 1080,
-                  decoration: const BoxDecoration(color: Color(0xFF383838)),
-                ),
-              ),
-              Positioned(
-                left: 1783,
-                top: 40,
-                child: Container(
-                  width: 137,
-                  height: 1080,
-                  decoration: const BoxDecoration(color: Color(0xFF383838)),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                top: 58,
-                child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
-                  child: Container(
-                    width: 58,
-                    height: 1920,
-                    decoration: const BoxDecoration(color: Color(0xFF383838)),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                top: 1080,
-                child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
-                  child: Container(
-                    width: 58,
-                    height: 1920,
-                    decoration: const BoxDecoration(color: Color(0xFF383838)),
-                  ),
-                ),
-              ),
               const Positioned(
                 left: 941,
                 top: 58,
