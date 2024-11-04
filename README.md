@@ -9,6 +9,8 @@ Right Now the features available in cardFlash are:
 - Spaced Repetition
 - Please suggest future revisions, either through pull requests, or issues
 
+Please report to me if you find any bugs through the issues panel
+
 ## Getting Started
 
-Since this project has been made with flutter, it can be installed and used in two way. One way would be to look at the releases folder in the repo, and download it from there. Another way is to... //continue later
+Since this project has been made with flutter, it can be installed and used in two way. One way would be to look at the releases folder in the repo, and download it from there.There, you will find a zip folder, which you can unzip, and use it portably, as long it stays in the folder. Another way is to... //continue later

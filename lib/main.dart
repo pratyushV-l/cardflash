@@ -6,9 +6,10 @@ void main() {
 
 //removed boilerplate
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(Object context) {
     // TODO: implement build
-    throw UnimplementedError();
+    throw "o";
   }
 }
