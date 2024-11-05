@@ -25,12 +25,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
   project.set_dart_entrypoint_arguments(std::move(command_line_arguments));
 
   FlutterWindow window(project);
-  Win32Window::Point origin(10, 10);
-  Win32Window::Size size(1280, 720);
+  Win32Window::Point origin(0, 0);
+  Win32Window::Size size(GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN));
   if (!window.Create(L"cardflash", origin, size)) {
     return EXIT_FAILURE;
   }
   window.SetQuitOnClose(true);
+
+  // Set the window style to remove the title bar and borders
+  SetWindowLong(window.GetHandle(), GWL_STYLE, WS_POPUP | WS_VISIBLE);
+  // Set the window to full screen
+  SetWindowPos(window.GetHandle(), HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
 
   ::MSG msg;
   while (::GetMessage(&msg, nullptr, 0, 0)) {
