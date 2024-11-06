@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData.dark(),
       home: const Scaffold(
-        body: Page1(),
+        body: Page5(),
       ),
     );
   }
@@ -364,11 +364,16 @@ class _Page3State extends State<Page3> {
                                 ),
                               ],
                             ),
-                            child: const Align(
-                              alignment: Alignment.topCenter,
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 15), // Adjust the padding as needed
-                                child: Text(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/create_flashcard.png', // Replace with your image path
+                                  width: 100,
+                                  height: 100,
+                                ),
+                                const SizedBox(height: 10),
+                                const Text(
                                   "Create a New Flashcard",
                                   style: TextStyle(
                                     color: Colors.white,
@@ -379,7 +384,7 @@ class _Page3State extends State<Page3> {
                                     decoration: TextDecoration.none,
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
                         ),
@@ -409,11 +414,16 @@ class _Page3State extends State<Page3> {
                                 ),
                               ],
                             ),
-                            child: const Align(
-                              alignment: Alignment.topCenter,
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 15), // Adjust the padding as needed
-                                child: Text(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/review_flashcards.png', // Replace with your image path
+                                  width: 100,
+                                  height: 100,
+                                ),
+                                const SizedBox(height: 10),
+                                const Text(
                                   "Review Existing Flashcards",
                                   style: TextStyle(
                                     color: Colors.white,
@@ -424,7 +434,7 @@ class _Page3State extends State<Page3> {
                                     decoration: TextDecoration.none,
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
                         ),
@@ -454,6 +464,116 @@ class _Page3State extends State<Page3> {
                       ),
                     ),
                   )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Page4 extends StatelessWidget {
+  const Page4({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: RadialGradient(
+          center: Alignment.center,
+          radius: 0.8,
+          colors: [
+            Color(0xFF403F3F),
+            Color(0xFF252524),
+          ],
+        ),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "Create a Flashcard",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontFamily: "ShareTech",
+                fontWeight: FontWeight.w400,
+                height: 0,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              width: 1200,
+              height: 600,
+              decoration: BoxDecoration(
+                color: const Color(0xFF5F8C93),
+                borderRadius: BorderRadius.circular(50),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF608D94).withOpacity(0.5),
+                    spreadRadius: 10,
+                    blurRadius: 20,
+                    offset: const Offset(0, 0)
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );  
+  }
+}
+
+class Page5 extends StatelessWidget {
+  const Page5({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: RadialGradient(
+          center: Alignment.center,
+          radius: 0.8,
+          colors: [
+            Color(0xFF403F3F),
+            Color(0xFF252524),
+          ]
+        )
+      ),
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "Review Your Flashcards",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontFamily: "ShareTech",
+                fontWeight: FontWeight.w400,
+                height: 0,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              width: 1200,
+              height: 600,
+              decoration: BoxDecoration(
+                color: const Color(0xFF5F8C93),
+                borderRadius: BorderRadius.circular(50),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF608D94).withOpacity(0.5),
+                    spreadRadius: 10,
+                    blurRadius: 20,
+                    offset: const Offset(0, 0)
+                  ),
                 ],
               ),
             ),
