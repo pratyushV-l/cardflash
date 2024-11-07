@@ -531,11 +531,35 @@ class Page4 extends StatelessWidget {
                         color: const Color(0xFF608D94).withOpacity(0.5),
                         spreadRadius: 10,
                         blurRadius: 20,
-                        offset: const Offset(0, 0)
-                      )
+                        offset: const Offset(0, 0),
+                      ),
                     ],
                   ),
-                )
+                  child: const Center(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        textAlignVertical: TextAlignVertical.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 75,
+                          fontFamily: "ShareTech",
+                          fontWeight: FontWeight.w400,
+                        ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Enter your text here',
+                          hintStyle: TextStyle(
+                            color: Colors.white54,
+                          ),
+                        ),
+                        maxLines: null,
+                        expands: true,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
