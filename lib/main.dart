@@ -13,25 +13,38 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.remove('flashcards');
 
-  runApp(const MyApp());
+  List<Map<String, String>> flashcards = [];
+  List<String>? flashcardsList = prefs.getStringList('flashcards');
+  if (flashcardsList != null) {
+    flashcards = flashcardsList.map((flashcard) {
+      List<String> parts = flashcard.split('|');
+      return {'question': parts[0], 'answer': parts[1]};
+    }).toList();
+  }
+
+  runApp(MyApp(flashcards: flashcards));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final List<Map<String, String>> flashcards;
+
+  const MyApp({super.key, required this.flashcards});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: const Scaffold(
-        body: Page1(),
+      home: Scaffold(
+        body: Page1(flashcards: flashcards),
       ),
     );
   }
 }
 
 class Page1 extends StatelessWidget {
-  const Page1({super.key});
+  final List<Map<String, String>> flashcards;
+
+  const Page1({super.key, required this.flashcards});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +53,7 @@ class Page1 extends StatelessWidget {
         Navigator.push(
           context,
           PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => const Page2(),
+            pageBuilder: (context, animation, secondaryAnimation) => Page2(flashcards: flashcards),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               const begin = (0.0);
               const end = (3.0);
@@ -55,7 +68,7 @@ class Page1 extends StatelessWidget {
               );
             },
             transitionDuration: const Duration(seconds: 5),
-          )
+          ),
         );
       },
       child: Container(
@@ -138,7 +151,9 @@ class Page1 extends StatelessWidget {
 }
 
 class Page2 extends StatefulWidget {
-  const Page2({super.key});
+  final List<Map<String, String>> flashcards;
+
+  const Page2({super.key, required this.flashcards});
 
   @override
   // ignore: duplicate_ignore
@@ -157,7 +172,7 @@ class _Page2State extends State<Page2> {
     Navigator.push(
       context,
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const Page3(),
+        pageBuilder: (context, animation, secondaryAnimation) => Page3(flashcards: widget.flashcards),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(0.0, -1.0);
           const end = Offset.zero;
@@ -260,7 +275,9 @@ class _Page2State extends State<Page2> {
 }
 
 class Page3 extends StatefulWidget {
-  const Page3({super.key});
+  final List<Map<String, String>> flashcards;
+
+  const Page3({super.key, required this.flashcards});
 
   @override
   _Page3State createState() => _Page3State();
@@ -270,7 +287,6 @@ class _Page3State extends State<Page3> {
   bool _isHovering1 = false;
   bool _isHovering2 = false;
   int _selectedOption = 0; // 0 means none selected, 1 means first selected, 2 means second selected
-  List<Map<String, String>> flashcards = []; // Define flashcards list
 
   void _selectOption(int option) {
     setState(() {
@@ -283,14 +299,14 @@ class _Page3State extends State<Page3> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Page4(flashcards: flashcards), // Pass flashcards to Page4
+          builder: (context) => Page4(flashcards: widget.flashcards), // Pass flashcards to Page4
         ),
       );
     } else if (_selectedOption == 2) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Page5(flashcards: flashcards), // Pass flashcards to Page5
+          builder: (context) => Page5(flashcards: widget.flashcards), // Pass flashcards to Page5
         ),
       );
     }
@@ -537,6 +553,13 @@ class _Page4State extends State<Page4> {
         return '${flashcard['question']}|${flashcard['answer']}';
       }).toList();
       await prefs.setStringList('flashcards', flashcardsList);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Page3(flashcards: widget.flashcards),
+        ),
+      );
     }
   }
 
@@ -698,7 +721,7 @@ class _Page4State extends State<Page4> {
             onPressed: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const Page3()),
+                MaterialPageRoute(builder: (context) => Page3(flashcards: widget.flashcards)),
               );
             },
           ),
@@ -914,7 +937,7 @@ class _Page5State extends State<Page5> {
             onPressed: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const Page3()),
+                MaterialPageRoute(builder: (context) => Page3(flashcards: widget.flashcards)),
               );
             },
           ),
