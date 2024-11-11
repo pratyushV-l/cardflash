@@ -23,8 +23,8 @@ Since this project has been made with flutter, it can be installed and used in t
 
 ## Demo Images
 
-![Demo Image](demo_images\image.png)
-![Demo Image](demo_images\image-1.png)
-![Demo Image](demo_images\image-2.png)
-![Demo Image](demo_images\image-3.png)
-![Demo Image](demo_images\image-4.png)
+![Demo Image](demo_images/image.png)
+![Demo Image](demo_images/image-1.png)
+![Demo Image](demo_images/image-2.png)
+![Demo Image](demo_images/image-3.png)
+![Demo Image](demo_images/image-4.png)
