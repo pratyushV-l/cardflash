@@ -600,10 +600,10 @@ class _Page4State extends State<Page4> {
                           fontFamily: "ShareTech",
                           fontWeight: FontWeight.w400,
                         ),
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Enter your text here',
-                          hintStyle: TextStyle(
+                          hintText: _isQuestion ? 'Enter Question Here' : 'Enter Answer Here',
+                          hintStyle: const TextStyle(
                             color: Colors.white54,
                           ),
                         ),
