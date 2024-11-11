@@ -609,18 +609,60 @@ class _Page4State extends State<Page4> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      onPressed: _flip,
-                      child: const Text('Flip'),
+                    GestureDetector(
+                      onTap: _flip,
+                      child: Container(
+                        width: 350,
+                        height: 100,
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFF5F8C93),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Flip',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'ShareTech',
+                              fontSize: 44,
+                              fontWeight: FontWeight.w400,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    const SizedBox(width: 20),
-                    ElevatedButton(
-                      onPressed: _submit,
-                      child: const Text('Submit'),
+                    const SizedBox(width: 60),
+                    GestureDetector(
+                      onTap: _submit,
+                      child: Container(
+                        width: 350,
+                        height: 100,
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFF5F8C93),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Submit',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'ShareTech',
+                              fontSize: 44,
+                              fontWeight: FontWeight.w400,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -767,18 +809,60 @@ class _Page5State extends State<Page5> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      onPressed: _flip,
-                      child: const Text('Flip'),
+                    GestureDetector(
+                      onTap: _flip,
+                      child: Container(
+                        width: 350,
+                        height: 100,
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFF5F8C93),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Flip',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'ShareTech',
+                              fontSize: 44,
+                              fontWeight: FontWeight.w400,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    const SizedBox(width: 20),
-                    ElevatedButton(
-                      onPressed: _nextFlashcard,
-                      child: const Text('Next'),
+                    const SizedBox(width: 60),
+                    GestureDetector(
+                      onTap: _nextFlashcard,
+                      child: Container(
+                        width: 350,
+                        height: 100,
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFF5F8C93),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Next',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'ShareTech',
+                              fontSize: 44,
+                              fontWeight: FontWeight.w400,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
