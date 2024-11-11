@@ -1,18 +1,20 @@
-import 'dart:async';
+// ignore_for_file: library_private_types_in_public_api
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  runApp(const MyApp()); 
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
 
 class Page1 extends StatelessWidget {
   const Page1({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -135,6 +137,7 @@ class Page2 extends StatefulWidget {
   const Page2({super.key});
 
   @override
+  // ignore: duplicate_ignore
   // ignore: library_private_types_in_public_api
   _Page2State createState() => _Page2State();
 }
@@ -256,7 +259,6 @@ class Page3 extends StatefulWidget {
   const Page3({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _Page3State createState() => _Page3State();
 }
 
@@ -264,6 +266,7 @@ class _Page3State extends State<Page3> {
   bool _isHovering1 = false;
   bool _isHovering2 = false;
   int _selectedOption = 0; // 0 means none selected, 1 means first selected, 2 means second selected
+  List<Map<String, String>> flashcards = []; // Define flashcards list
 
   void _selectOption(int option) {
     setState(() {
@@ -276,14 +279,14 @@ class _Page3State extends State<Page3> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const Page4(),
+          builder: (context) => Page4(flashcards: flashcards), // Pass flashcards to Page4
         ),
       );
     } else if (_selectedOption == 2) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const Page5(),
+          builder: (context) => Page5(flashcards: flashcards), // Pass flashcards to Page5
         ),
       );
     }
@@ -485,8 +488,53 @@ class _Page3State extends State<Page3> {
   }
 }
 
-class Page4 extends StatelessWidget {
-  const Page4({super.key});
+class Page4 extends StatefulWidget {
+  final List<Map<String, String>> flashcards;
+
+  const Page4({super.key, required this.flashcards});
+
+  @override
+  _Page4State createState() => _Page4State();
+}
+
+class _Page4State extends State<Page4> {
+  final TextEditingController _textController = TextEditingController();
+  bool _isQuestion = true;
+  String _question = '';
+  String _answer = '';
+
+  void _flip() {
+    setState(() {
+      if (_isQuestion) {
+        _question = _textController.text;
+        _textController.clear();
+        _textController.text = _answer;
+      } else {
+        _answer = _textController.text;
+        _textController.clear();
+        _textController.text = _question;
+      }
+      _isQuestion = !_isQuestion;
+    });
+  }
+
+  void _submit() async {
+    if (_question.isNotEmpty && _answer.isNotEmpty) {
+      setState(() {
+        widget.flashcards.add({'question': _question, 'answer': _answer});
+        _question = '';
+        _answer = '';
+        _textController.clear();
+        _isQuestion = true;
+      });
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<String> flashcardsList = widget.flashcards.map((flashcard) {
+        return '${flashcard['question']}|${flashcard['answer']}';
+      }).toList();
+      await prefs.setStringList('flashcards', flashcardsList);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -535,19 +583,20 @@ class Page4 extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Material(
                       color: Colors.transparent,
                       child: TextField(
+                        controller: _textController,
                         textAlign: TextAlign.center,
                         textAlignVertical: TextAlignVertical.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 75,
                           fontFamily: "ShareTech",
                           fontWeight: FontWeight.w400,
                         ),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Enter your text here',
                           hintStyle: TextStyle(
@@ -559,6 +608,21 @@ class Page4 extends StatelessWidget {
                       ),
                     ),
                   ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _flip,
+                      child: const Text('Flip'),
+                    ),
+                    const SizedBox(width: 20),
+                    ElevatedButton(
+                      onPressed: _submit,
+                      child: const Text('Submit'),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -582,8 +646,53 @@ class Page4 extends StatelessWidget {
   }
 }
 
-class Page5 extends StatelessWidget {
-  const Page5({super.key});
+class Page5 extends StatefulWidget {
+  final List<Map<String, String>> flashcards;
+
+  const Page5({super.key, required this.flashcards});
+
+  @override
+  _Page5State createState() => _Page5State();
+}
+
+class _Page5State extends State<Page5> {
+  int _currentIndex = 0;
+  bool _isQuestion = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFlashcards();
+  }
+
+  Future<void> _loadFlashcards() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? flashcardsList = prefs.getStringList('flashcards');
+    if (flashcardsList != null) {
+      setState(() {
+        widget.flashcards.clear();
+        widget.flashcards.addAll(flashcardsList.map((flashcard) {
+          List<String> parts = flashcard.split('|');
+          return {'question': parts[0], 'answer': parts[1]};
+        }).toList());
+      });
+    }
+  }
+
+  void _flip() {
+    setState(() {
+      _isQuestion = !_isQuestion;
+    });
+  }
+
+  void _nextFlashcard() {
+    setState(() {
+      if (widget.flashcards.isNotEmpty) {
+        _currentIndex = (_currentIndex + 1) % widget.flashcards.length;
+        _isQuestion = true; // Reset to show question first
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -597,8 +706,8 @@ class Page5 extends StatelessWidget {
               colors: [
                 Color(0xFF403F3F),
                 Color(0xFF252524),
-              ]
-            )
+              ],
+            ),
           ),
           child: Center(
             child: Column(
@@ -613,7 +722,7 @@ class Page5 extends StatelessWidget {
                     fontFamily: "ShareTech",
                     fontWeight: FontWeight.w400,
                     height: 0,
-                    decoration: TextDecoration.none
+                    decoration: TextDecoration.none,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -628,10 +737,50 @@ class Page5 extends StatelessWidget {
                         color: const Color(0xFF608D94).withOpacity(0.5),
                         spreadRadius: 10,
                         blurRadius: 20,
-                        offset: const Offset(0, 0)
+                        offset: const Offset(0, 0),
                       ),
                     ],
                   ),
+                  child: Center(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: widget.flashcards.isEmpty
+                          ? const Text(
+                              'No flashcards available',
+                              style: TextStyle(
+                                color: Colors.white54,
+                                fontSize: 75,
+                                fontFamily: "ShareTech",
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )
+                          : Text(
+                              _isQuestion ? widget.flashcards[_currentIndex]['question']! : widget.flashcards[_currentIndex]['answer']!,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 75,
+                                fontFamily: "ShareTech",
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _flip,
+                      child: const Text('Flip'),
+                    ),
+                    const SizedBox(width: 20),
+                    ElevatedButton(
+                      onPressed: _nextFlashcard,
+                      child: const Text('Next'),
+                    ),
+                  ],
                 ),
               ],
             ),
