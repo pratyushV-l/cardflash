@@ -6,9 +6,13 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove('flashcards');
+
   runApp(const MyApp());
 }
 
@@ -623,6 +627,14 @@ class _Page4State extends State<Page4> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
+                          shadows: [
+                            BoxShadow(
+                              color: const Color(0xFF608D94).withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              offset: const Offset(0, 0),
+                            ),
+                          ],
                         ),
                         child: const Center(
                           child: Text(
@@ -649,6 +661,14 @@ class _Page4State extends State<Page4> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
+                          shadows: [
+                            BoxShadow(
+                              color: const Color(0xFF608D94).withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              offset: const Offset(0, 0),
+                            ),
+                          ],
                         ),
                         child: const Center(
                           child: Text(
@@ -823,6 +843,14 @@ class _Page5State extends State<Page5> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
+                          shadows: [
+                            BoxShadow(
+                              color: const Color(0xFF608D94).withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              offset: const Offset(0, 0),
+                            ),
+                          ],
                         ),
                         child: const Center(
                           child: Text(
@@ -849,6 +877,14 @@ class _Page5State extends State<Page5> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
+                          shadows: [
+                            BoxShadow(
+                              color: const Color(0xFF608D94).withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              offset: const Offset(0, 0),
+                            ),
+                          ],
                         ),
                         child: const Center(
                           child: Text(
